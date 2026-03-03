@@ -1,5 +1,4 @@
-# Repositori de Programació - Eric Balmisa
-
+ Repositori de Programació 
 Benvingut al meu repositori de projectes de programació.  
 Aquí guardo els meus treballs relacionats amb desenvolupament web i Python.
 
