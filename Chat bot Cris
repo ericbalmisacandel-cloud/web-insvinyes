@@ -1,0 +1,114 @@
+import random
+
+def saluda():
+    """Mostra la descripció inicial del bot i demana el nom."""
+    print("Hola! Soc Cris, el teu assistent personal del FIFA.")
+    print("Et puc ajudar amb consells sobre jugadors, equips, modes de joc, o fins i tot explicar acudits i fer prediccions.")
+    
+    nom_complet = input("Com et dius?: ").strip().capitalize()
+    nom = nom_complet.split()[0]  # Es queda només amb el primer nom
+    print(f"Encantat de conèixer-te, {nom}.")
+    return nom
+
+
+def resposta_fifa(pregunta, nom):
+    """Genera respostes segons paraules clau del FIFA."""
+    claus = ["jugador", "equip", "mode", "porter", "estadi", "regatejador", "acudit", "predicció", "qui guanyarà"]
+
+    if not any(paraula in pregunta for paraula in claus):
+        return f"No t'he entès bé, {nom}. Pots repetir-ho amb altres paraules?"
+
+    if "jugador" in pregunta:
+        respostes = [
+            f"Mbappé és un dels millors, {nom}. Té una velocitat impressionant.",
+            f"Haaland també és increïble, sobretot pel seu poder físic.",
+            "Jo diria que Mbappé segueix sent el jugador més complet del FIFA."
+        ]
+        return random.choice(respostes)
+
+    elif "equip" in pregunta:
+        return f"El Manchester City i el Real Madrid són dos equips molt forts, {nom}. Costaria triar-ne només un."
+
+    elif "mode" in pregunta:
+        return f"Ultimate Team és el mode més popular i competitiu. Tu quin mode prefereixes, {nom}?"
+
+    elif "porter" in pregunta:
+        return "Courtois i Alisson són probablement els millors porters actuals."
+
+    elif "estadi" in pregunta:
+        return "El Santiago Bernabéu i l'Etihad tenen una atmosfera increïble."
+
+    elif "regatejador" in pregunta:
+        return "Neymar continua sent un dels millors regatejadors del FIFA."
+
+    elif "acudit" in pregunta:
+        acudits = [
+            "Saps per què Mbappé mai arriba tard? Perquè sempre corre més que el rellotge.",
+            "Un porter entra a un bar... i el tanca amb clau!",
+            "Diuen que el FIFA és com la vida: si no passes, et roben la pilota."
+        ]
+        return random.choice(acudits)
+
+    elif "predicció" in pregunta or "qui guanyarà" in pregunta:
+        equips = ["Barcelona", "Real Madrid", "Manchester City", "PSG", "Bayern de Munic", "Liverpool"]
+        guanyador = random.choice(equips)
+        return f"Si hagués de fer una predicció, diria que el {guanyador} guanyarà el proper partit."
+
+    else:
+        return f"No estic segur d’això, {nom}. Pots preguntar-me sobre jugadors, equips, modes, acudits o prediccions."
+
+
+def vol_continuar(text="Vols continuar parlant amb mi? (sí/no): "):
+    """Demana a l'usuari si vol continuar i retorna True o False."""
+    resposta = input(text).strip().lower()
+    return resposta.startswith("s")  # retorna True si comença amb 's'
+
+
+def pregunta_random(nom):
+    """El bot fa una pregunta aleatòria a l'usuari."""
+    preguntes = [
+        "Quin és el teu equip preferit al FIFA?",
+        "Qui és el teu jugador favorit?",
+        "Quin mode de joc t'agrada més jugar?",
+        "T'agrada més atacar o defensar al FIFA?",
+        "Quina posició t'agrada jugar més?"
+    ]
+    pregunta = random.choice(preguntes)
+    resposta = input(f"{pregunta} ").strip()
+    if resposta:
+        print(f"Interessant, {nom}. Gràcies per compartir-ho!")
+    else:
+        print(f"No m'has contestat, {nom}, però seguim parlant.")
+
+
+def conversa():
+    """Funció principal de la conversa amb Cris."""
+    nom = saluda()
+
+    vol_ajuda = input(f"T’agradaria que t’ajudés amb alguna cosa del FIFA, {nom}? (sí/no): ").strip().lower()
+    if vol_ajuda.startswith("n"):
+        print(f"Cap problema, {nom}. Que vagi molt bé!")
+        return
+
+    while True:
+        # L'usuari fa una pregunta
+        pregunta = input(f"\nQuè vols saber del FIFA, {nom}?: ").strip().lower()
+        resposta = resposta_fifa(pregunta, nom)
+        print(resposta)
+
+        # Si el bot no entén la pregunta, torna a preguntar sense tallar la conversa
+        if "no t'he entès" in resposta.lower():
+            continue
+
+        # El bot fa una pregunta aleatòria després de respondre
+        pregunta_random(nom)
+
+        # Pregunta si vol continuar
+        if not vol_continuar():
+            print(f"Ha estat un plaer parlar amb tu, {nom}. Espero tornar-te a veure aviat!")
+            break
+
+
+# Executa el programa només si s'executa directament
+if __name__ == "__main__":
+    conversa()
