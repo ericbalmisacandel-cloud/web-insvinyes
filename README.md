@@ -1,4 +1,3 @@
-# web-insvinyes
 # Repositori de Programació - Eric Balmisa
 
 Benvingut al meu repositori de projectes de programació.  
